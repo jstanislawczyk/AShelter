@@ -13,10 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\util">
+      <UniqueIdentifier>{b1c8ad7e-a36b-45a1-9561-9f5592a00674}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\util\printer">
+      <UniqueIdentifier>{cbecbd3b-04cc-4dac-b786-51a40a482b94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AShelter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Printer.cpp">
+      <Filter>Source Files\util\printer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Printer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
