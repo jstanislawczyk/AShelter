@@ -19,6 +19,9 @@
     <Filter Include="Source Files\util\printer">
       <UniqueIdentifier>{cbecbd3b-04cc-4dac-b786-51a40a482b94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\model">
+      <UniqueIdentifier>{66c8060f-fa9a-48f8-a829-bd59f1886c91}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AShelter.cpp">
@@ -27,9 +30,15 @@
     <ClCompile Include="Printer.cpp">
       <Filter>Source Files\util\printer</Filter>
     </ClCompile>
+    <ClCompile Include="Animal.cpp">
+      <Filter>Source Files\model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Printer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
