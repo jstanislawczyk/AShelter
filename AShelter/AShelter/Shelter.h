@@ -7,7 +7,7 @@ class Shelter {
 	private:
 		string name = "MyMiniShelter";
 		int maximumCapacity = 20;
-		int currentCapacity;
+		int currentCapacity = 0;
 
 	public:
 		string getName() {

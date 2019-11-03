@@ -22,6 +22,9 @@
     <Filter Include="Source Files\model">
       <UniqueIdentifier>{66c8060f-fa9a-48f8-a829-bd59f1886c91}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\controller">
+      <UniqueIdentifier>{94b3c5ee-fdac-4e81-87f3-a2224d8e782d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AShelter.cpp">
@@ -36,6 +39,9 @@
     <ClCompile Include="Shelter.cpp">
       <Filter>Source Files\model</Filter>
     </ClCompile>
+    <ClCompile Include="ShelterController.cpp">
+      <Filter>Source Files\controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Printer.h">
@@ -48,6 +54,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Shelter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShelterController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
