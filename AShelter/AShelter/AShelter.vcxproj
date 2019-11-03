@@ -155,10 +155,16 @@
     <ClCompile Include="Animal.cpp" />
     <ClCompile Include="AShelter.cpp" />
     <ClCompile Include="Printer.cpp" />
+    <ClCompile Include="Shelter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animal.h" />
     <ClInclude Include="Printer.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Shelter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="AShelter.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
