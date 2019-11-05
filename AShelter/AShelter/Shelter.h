@@ -10,6 +10,8 @@ class Shelter {
 		int currentCapacity = 0;
 
 	public:
+		static const string FILE_REGISTER_NAME;
+
 		string getName() {
 			return name;
 		}
@@ -19,7 +21,7 @@ class Shelter {
 		}
 
 		void setCurrentCapacity(int currentCapacity) {
-			currentCapacity = currentCapacity;
+			this -> currentCapacity = currentCapacity;
 		}
 
 		int getCurrentCapacity() {

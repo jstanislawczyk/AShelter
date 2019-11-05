@@ -25,6 +25,18 @@
     <Filter Include="Source Files\controller">
       <UniqueIdentifier>{94b3c5ee-fdac-4e81-87f3-a2224d8e782d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\controller">
+      <UniqueIdentifier>{a94a51ab-ebff-4677-92fe-0eed00ab5b66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\model">
+      <UniqueIdentifier>{4dc8d251-fcbd-44ed-ba10-fd55bae05dea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\util">
+      <UniqueIdentifier>{0e7cb49a-547a-4054-8610-51936b2b6a32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\util\printer">
+      <UniqueIdentifier>{7fbbf3a0-e746-4ad6-aef4-248edb7f544f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AShelter.cpp">
@@ -44,20 +56,20 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Printer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Animal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Shelter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ShelterController.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Animal.h">
+      <Filter>Header Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="Shelter.h">
+      <Filter>Header Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="Printer.h">
+      <Filter>Header Files\util\printer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

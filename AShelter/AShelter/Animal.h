@@ -12,7 +12,7 @@ class Animal {
 
 	public:
 		void setName(string name) {
-			name = name;
+			this -> name = name;
 		}
 
 		string getName() {
@@ -20,7 +20,7 @@ class Animal {
 		}
 
 		void setAge(int age) {
-			age = age;
+			this -> age = age;
 		}
 
 		int getAge() {
@@ -28,7 +28,7 @@ class Animal {
 		}
 
 		void setType(string type) {
-			type = type;
+			this -> type = type;
 		}
 
 		string getType() {
@@ -36,7 +36,7 @@ class Animal {
 		}
 
 		void setBreed(string breed) {
-			breed = breed;
+			this -> breed = breed;
 		}
 
 		string getBreed() {
