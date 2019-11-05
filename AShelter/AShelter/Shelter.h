@@ -13,9 +13,7 @@ class Shelter {
 		static const string FILE_REGISTER_NAME;
 
 		string getName();
-
 		int getMaximumCapacity();
-
 		void setCurrentCapacity(int currentCapacity);
 		int getCurrentCapacity();
 };
