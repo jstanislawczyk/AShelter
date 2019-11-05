@@ -11,35 +11,15 @@ class Animal {
 		string breed;
 
 	public:
-		void setName(string name) {
-			this -> name = name;
-		}
+		void setName(string name);
+		string getName();
 
-		string getName() {
-			return name;
-		}
+		void setAge(int age);
+		int getAge();
 
-		void setAge(int age) {
-			this -> age = age;
-		}
+		void setType(string type);
+		string getType();
 
-		int getAge() {
-			return age;
-		}
-
-		void setType(string type) {
-			this -> type = type;
-		}
-
-		string getType() {
-			return type;
-		}
-
-		void setBreed(string breed) {
-			this -> breed = breed;
-		}
-
-		string getBreed() {
-			return breed;
-		}
+		void setBreed(string breed);
+		string getBreed();
 };

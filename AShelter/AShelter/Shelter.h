@@ -12,19 +12,10 @@ class Shelter {
 	public:
 		static const string FILE_REGISTER_NAME;
 
-		string getName() {
-			return name;
-		}
+		string getName();
 
-		int getMaximumCapacity() {
-			return maximumCapacity;
-		}
+		int getMaximumCapacity();
 
-		void setCurrentCapacity(int currentCapacity) {
-			this -> currentCapacity = currentCapacity;
-		}
-
-		int getCurrentCapacity() {
-			return currentCapacity;
-		}
+		void setCurrentCapacity(int currentCapacity);
+		int getCurrentCapacity();
 };
