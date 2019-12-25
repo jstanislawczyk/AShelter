@@ -1,4 +1,6 @@
 #include <string>
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -9,11 +11,19 @@ class Shelter {
 		int maximumCapacity = 20;
 		int currentCapacity = 0;
 
+		void setupInitialCapacity();
+
 	public:
-		static const string FILE_REGISTER_NAME; 
+		static const string FILE_ANIMAL_REGISTER_NAME; 
+
+		Shelter();
+
+		void incrementCurrentCapacity();
+		void decrementCurrentCapacity();
 
 		string getName();
 		int getMaximumCapacity();
-		void setCurrentCapacity(int currentCapacity);
 		int getCurrentCapacity();
+
+		void setCurrentCapacity(int currentCapacity);
 };

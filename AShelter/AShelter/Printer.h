@@ -14,15 +14,5 @@ class Printer {
 			WHITE = 15
 		};
 
-		static void println(const string text, const Color color = Color::WHITE) {
-			const HANDLE consoleHandler = GetStdHandle(STD_OUTPUT_HANDLE);
-			const int whiteColorNumber = Color::WHITE;
-			const int colorNumber = color;
-
-			SetConsoleTextAttribute(consoleHandler, colorNumber);
-
-			cout << text << endl;
-
-			SetConsoleTextAttribute(consoleHandler, whiteColorNumber);
-		}
+		static void println(const string text, const Color color = Color::WHITE, bool shouldClearConsole = false);
 };

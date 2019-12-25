@@ -1,7 +1,13 @@
 #include "ShelterController.h"
 #include "IdSequence.h"
 
-void ShelterController::chooseOption(Shelter shelter) {
+void ShelterController::init() {
+	Shelter shelter = Shelter();
+
+	printMainPage(shelter);
+}
+
+void ShelterController::chooseOption(Shelter& shelter) {
 	cout << "Choose an option: ";
 
 	int userChoice;
@@ -23,23 +29,35 @@ void ShelterController::chooseOption(Shelter shelter) {
 	}
 }
 
-void ShelterController::showAnimals(Shelter shelter) {
-	Printer::println("Current animals", Printer::BLUE);
+void ShelterController::showAnimals(Shelter& shelter) {
+	ifstream fileAnimalRegister;
+	string fileLine = "";
+
+	fileAnimalRegister.open(Shelter::FILE_ANIMAL_REGISTER_NAME);
+
+	Printer::println("Current animals quantity", Printer::BLUE, true);
 	cout << shelter.getCurrentCapacity() << "/" << shelter.getMaximumCapacity() << endl << endl;
+	Printer::println("Animals list", Printer::BLUE);
+
+	while (getline(fileAnimalRegister, fileLine)) {
+		cout << fileLine << endl;
+	}
+
+	fileAnimalRegister.close();
 }
 
-void ShelterController::addAnimal(Shelter shelter) {
+void ShelterController::addAnimal(Shelter& shelter) {
 	ofstream fileRegister;
-
-	fileRegister.open(Shelter::FILE_REGISTER_NAME, ios::out | ios::app | ios::binary);
+	fileRegister.open(Shelter::FILE_ANIMAL_REGISTER_NAME, ios::app);
 
 	if (fileRegister.is_open()) {
 		Animal createdAnimal = setupAnimalData();
 		saveAnimalToFile(createdAnimal, fileRegister);
+		shelter.incrementCurrentCapacity();
 
 		fileRegister.close();
 	} else {
-		const string errorMessage = "Couldn't open " + Shelter::FILE_REGISTER_NAME + " file";
+		const string errorMessage = "Couldn't open " + Shelter::FILE_ANIMAL_REGISTER_NAME + " file";
 		Printer::println(errorMessage, Printer::RED);
 	}
 }
@@ -67,6 +85,7 @@ Animal ShelterController::setupAnimalData() {
 	Printer::println("Animal created", Printer::GREEN);
 	cout << endl;
 
+	animal.setId(IdSequence::getNextId());
 	animal.setName(animalName);
 	animal.setAge(animalAge);
 	animal.setType(animalType);
@@ -76,20 +95,14 @@ Animal ShelterController::setupAnimalData() {
 };
 
 void ShelterController::saveAnimalToFile(Animal animal, ofstream& fileRegister) {
+	fileRegister << animal.getId() << endl;
 	fileRegister << animal.getName() << endl;
 	fileRegister << animal.getAge() << endl;
 	fileRegister << animal.getType() << endl;
 	fileRegister << animal.getBreed() << endl << endl;
 }
 
-void ShelterController::init() {
-	Shelter shelter = Shelter();
-	shelter.setCurrentCapacity(1);
-
-	printMainPage(shelter);
-}
-
-void ShelterController::printMainPage(Shelter shelter) {
+void ShelterController::printMainPage(Shelter& shelter) {
 	Printer::println(shelter.getName(), Printer::BLUE);
 	cout << endl;
 	cout << "1. Show animals" << endl;

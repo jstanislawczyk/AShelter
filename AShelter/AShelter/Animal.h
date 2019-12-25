@@ -5,21 +5,22 @@ using namespace std;
 class Animal {
 
 	private:
+		unsigned long int id;
 		string name;
 		int age;
 		string type;
 		string breed;
 
 	public:
+		unsigned long int getId() const;
+		string getName() const;
+		int getAge() const;
+		string getType() const;
+		string getBreed() const;
+
+		void setId(unsigned long int id);
 		void setName(string name);
-		string getName();
-
 		void setAge(int age);
-		int getAge();
-
 		void setType(string type);
-		string getType();
-
 		void setBreed(string breed);
-		string getBreed();
 };

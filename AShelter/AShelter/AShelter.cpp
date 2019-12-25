@@ -6,9 +6,8 @@
 using namespace std;
 
 int main() {
-	IdSequence idSequence = IdSequence();
 	ShelterController shelterController = ShelterController();
 
-	idSequence.init();
+	IdSequence::init();
 	shelterController.init();
 }

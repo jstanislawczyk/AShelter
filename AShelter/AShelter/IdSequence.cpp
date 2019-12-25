@@ -28,9 +28,9 @@ unsigned long int IdSequence::getNextId() {
 	idSequenceFile.open(IdSequence::FILE_ID_SEQUENCE_NAME, ios::out | ios::in);
 
 	if (idSequenceFile.is_open()) {
-		const unsigned long int previousId = this->getPreviousId(idSequenceFile);
+		const unsigned long int previousId = getPreviousId(idSequenceFile);
 		const unsigned long int nextId = previousId + 1;
-		this->incrementIdInFile(nextId, idSequenceFile);
+		incrementIdInFile(nextId, idSequenceFile);
 
 		idSequenceFile.close();
 
