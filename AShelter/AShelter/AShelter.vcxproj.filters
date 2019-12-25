@@ -54,6 +54,9 @@
     <ClCompile Include="ShelterController.cpp">
       <Filter>Source Files\controller</Filter>
     </ClCompile>
+    <ClCompile Include="IdSequence.cpp">
+      <Filter>Source Files\model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -70,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="Printer.h">
       <Filter>Header Files\util\printer</Filter>
+    </ClInclude>
+    <ClInclude Include="IdSequence.h">
+      <Filter>Header Files\model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

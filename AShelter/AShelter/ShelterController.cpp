@@ -1,4 +1,5 @@
 #include "ShelterController.h"
+#include "IdSequence.h"
 
 void ShelterController::chooseOption(Shelter shelter) {
 	cout << "Choose an option: ";
@@ -29,15 +30,17 @@ void ShelterController::showAnimals(Shelter shelter) {
 
 void ShelterController::addAnimal(Shelter shelter) {
 	ofstream fileRegister;
+
 	fileRegister.open(Shelter::FILE_REGISTER_NAME, ios::out | ios::app | ios::binary);
 
 	if (fileRegister.is_open()) {
 		Animal createdAnimal = setupAnimalData();
 		saveAnimalToFile(createdAnimal, fileRegister);
+
 		fileRegister.close();
-	}
-	else {
-		Printer::println("Couldn't open file", Printer::RED);
+	} else {
+		const string errorMessage = "Couldn't open " + Shelter::FILE_REGISTER_NAME + " file";
+		Printer::println(errorMessage, Printer::RED);
 	}
 }
 

@@ -10,7 +10,7 @@ class Shelter {
 		int currentCapacity = 0;
 
 	public:
-		static const string FILE_REGISTER_NAME;
+		static const string FILE_REGISTER_NAME; 
 
 		string getName();
 		int getMaximumCapacity();
