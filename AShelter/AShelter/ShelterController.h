@@ -13,9 +13,13 @@ class ShelterController {
 		void chooseOption(Shelter& shelter);
 		void showAnimals(Shelter& shelter);
 		void addAnimal(Shelter& shelter);
+		void updateAnimal(Shelter& shelter);
 		void deleteAnimal(Shelter& shelter);
 		Animal setupAnimalData();
+		Animal setupAnimalData(unsigned long int animalId);
 		void saveAnimalToFile(Animal animal, ofstream& fileRegister);
+		void saveAnimalToFileWithOptionalData(Animal updatedAnimal, Animal previousAnimal, ofstream& animalFileRegister);
+		void updateAnimalInFile(Animal updatedAnimal, fstream& animalFileRegister);
 		bool deleteAnimalFromFile(unsigned long int animalId, fstream& fileRegister);
 
 	public:

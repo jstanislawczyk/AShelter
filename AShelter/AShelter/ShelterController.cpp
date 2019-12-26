@@ -24,6 +24,7 @@ void ShelterController::chooseOption(Shelter& shelter) {
 		printMainPage(shelter);
 		break;
 	case 3:
+		updateAnimal(shelter);
 		printMainPage(shelter);
 		break;
 	case 4:
@@ -85,6 +86,26 @@ void ShelterController::addAnimal(Shelter& shelter) {
 	}
 }
 
+void ShelterController::updateAnimal(Shelter& shelter) {
+	fstream animalFileRegister;
+	animalFileRegister.open(Shelter::FILE_ANIMAL_REGISTER_NAME, ios::in);
+
+	if (animalFileRegister.is_open()) {
+		unsigned long int animalId = -1;
+
+		Printer::println("Update animal", Printer::BLUE);
+		cout << "Animal id for update: ";
+		cin >> animalId;
+
+		Animal updatedAnimal = setupAnimalData(animalId);
+		updateAnimalInFile(updatedAnimal, animalFileRegister);
+	}
+	else {
+		const string errorMessage = "Couldn't open " + Shelter::FILE_ANIMAL_REGISTER_NAME + " file";
+		Printer::println(errorMessage, Printer::RED);
+	}
+}
+
 void ShelterController::deleteAnimal(Shelter& shelter) {
 	fstream animalFileRegister;
 	animalFileRegister.open(Shelter::FILE_ANIMAL_REGISTER_NAME, ios::in);
@@ -138,12 +159,123 @@ Animal ShelterController::setupAnimalData() {
 	return animal;
 };
 
+Animal ShelterController::setupAnimalData(unsigned long int animalId) {
+	Animal animal = Animal();
+
+	Printer::println("Leave variable empty if you don't want to update it", Printer::ORANGE);
+
+	cout << endl;
+	cout << "Enter animal name: ";
+	string animalName;
+	cin >> animalName;
+
+	cout << "Enter animal age: ";
+	int animalAge;
+	cin >> animalAge;
+
+	cout << "Enter animal type (e.g. dog): ";
+	string animalType;
+	cin >> animalType;
+
+	cout << "Enter animal breed: ";
+	string animalBreed;
+	cin >> animalBreed;
+
+	cout << endl;
+
+	animal.setId(animalId);
+	animal.setName(animalName);
+	animal.setAge(animalAge);
+	animal.setType(animalType);
+	animal.setBreed(animalBreed);
+
+	return animal;
+};
+
+void ShelterController::updateAnimalInFile(Animal updatedAnimal, fstream& animalFileRegister) {
+	ofstream templateAnimalFileRegister(Shelter::FILE_TEMP_ANIMAL_REGISTER_NAME);
+
+	char* animalFileRegisterNameAsChar = new char[Shelter::FILE_ANIMAL_REGISTER_NAME.length() + 1];
+	char* templateAnimalFileRegisterNameAsChar = new char[Shelter::FILE_TEMP_ANIMAL_REGISTER_NAME.length() + 1];
+	strcpy_s(animalFileRegisterNameAsChar, Shelter::FILE_ANIMAL_REGISTER_NAME.length() + 1, Shelter::FILE_ANIMAL_REGISTER_NAME.c_str());
+	strcpy_s(templateAnimalFileRegisterNameAsChar, Shelter::FILE_TEMP_ANIMAL_REGISTER_NAME.length() + 1, Shelter::FILE_TEMP_ANIMAL_REGISTER_NAME.c_str());
+
+	const unsigned int idLineNumberMultiplier = 7;
+	const unsigned int shiftToNextId = 6;
+	unsigned int currentLineNumber = 1;
+	bool isAnimalUpdated = false;
+	string fileLine = "";
+
+	while (getline(animalFileRegister, fileLine)) {
+		bool isAnimalIdLine = currentLineNumber % shiftToNextId == 1;
+		bool isAnimalIdForUpdate = fileLine.compare(to_string(updatedAnimal.getId())) == 0;
+
+		if (isAnimalIdLine && isAnimalIdForUpdate) {
+			Animal previousAnimal = Animal();
+
+			getline(animalFileRegister, fileLine);
+			previousAnimal.setName(fileLine);
+
+			getline(animalFileRegister, fileLine);
+			previousAnimal.setAge(stoi(fileLine));
+
+			getline(animalFileRegister, fileLine);
+			previousAnimal.setType(fileLine);
+
+			getline(animalFileRegister, fileLine);
+			previousAnimal.setBreed(fileLine);
+
+			saveAnimalToFileWithOptionalData(updatedAnimal, previousAnimal, templateAnimalFileRegister);
+			isAnimalUpdated = true;
+		} else if (fileLine.empty()) {
+			templateAnimalFileRegister << endl;
+		} else {
+			templateAnimalFileRegister << fileLine << endl;
+		}
+
+		currentLineNumber++;
+	}
+
+	if (isAnimalUpdated) {
+		Printer::println("Animal updated\n", Printer::GREEN);
+	} else {
+		Printer::println("Animal not found\n", Printer::RED);
+	}
+
+	animalFileRegister.close();
+	templateAnimalFileRegister.close();
+
+	remove(animalFileRegisterNameAsChar);
+	rename(templateAnimalFileRegisterNameAsChar, animalFileRegisterNameAsChar);
+}
+
 void ShelterController::saveAnimalToFile(Animal animal, ofstream& animalFileRegister) {
 	animalFileRegister << animal.getId() << endl;
 	animalFileRegister << animal.getName() << endl;
 	animalFileRegister << animal.getAge() << endl;
 	animalFileRegister << animal.getType() << endl;
 	animalFileRegister << animal.getBreed() << endl << endl;
+}
+
+void ShelterController::saveAnimalToFileWithOptionalData(Animal updatedAnimal, Animal previousAnimal, ofstream& animalFileRegister) {
+
+	animalFileRegister << updatedAnimal.getId() << endl;
+
+	updatedAnimal.getName().empty()
+		? animalFileRegister << previousAnimal.getName() << endl
+		: animalFileRegister << updatedAnimal.getName() << endl;
+
+	updatedAnimal.getAge() == 0
+		? animalFileRegister << previousAnimal.getAge() << endl
+		: animalFileRegister << updatedAnimal.getAge() << endl;
+
+	updatedAnimal.getType().empty()
+		? animalFileRegister << previousAnimal.getType() << endl
+		: animalFileRegister << updatedAnimal.getType() << endl;
+
+	updatedAnimal.getBreed().empty()
+		? animalFileRegister << previousAnimal.getBreed() << endl
+		: animalFileRegister << updatedAnimal.getBreed() << endl;
 }
 
 bool ShelterController::deleteAnimalFromFile(unsigned long int animalId, fstream& animalFileRegister) {
