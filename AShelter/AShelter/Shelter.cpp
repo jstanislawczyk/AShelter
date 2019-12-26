@@ -1,5 +1,8 @@
 #include "Shelter.h"
 
+const string Shelter::FILE_ANIMAL_REGISTER_NAME = "current_animals.txt";
+const string Shelter::FILE_TEMP_ANIMAL_REGISTER_NAME = "current_animals_temp.txt";
+
 Shelter::Shelter() {
 	this->setupInitialCapacity();
 }
@@ -43,5 +46,3 @@ void Shelter::setCurrentCapacity(int currentCapacity) {
 int Shelter::getCurrentCapacity() {
 	return currentCapacity;
 }
-
-const string Shelter::FILE_ANIMAL_REGISTER_NAME = "current_animals.txt";

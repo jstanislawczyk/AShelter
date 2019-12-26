@@ -14,7 +14,8 @@ class Shelter {
 		void setupInitialCapacity();
 
 	public:
-		static const string FILE_ANIMAL_REGISTER_NAME; 
+		static const string FILE_ANIMAL_REGISTER_NAME;
+		static const string FILE_TEMP_ANIMAL_REGISTER_NAME;
 
 		Shelter();
 

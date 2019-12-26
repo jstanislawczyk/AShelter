@@ -23,6 +23,13 @@ void ShelterController::chooseOption(Shelter& shelter) {
 		addAnimal(shelter);
 		printMainPage(shelter);
 		break;
+	case 3:
+		printMainPage(shelter);
+		break;
+	case 4:
+		deleteAnimal(shelter);
+		printMainPage(shelter);
+		break;
 	default:
 		Printer::println("Application closed", Printer::GREEN);
 		break;
@@ -40,23 +47,62 @@ void ShelterController::showAnimals(Shelter& shelter) {
 	Printer::println("Animals list", Printer::BLUE);
 
 	while (getline(fileAnimalRegister, fileLine)) {
-		cout << fileLine << endl;
+		if (!fileLine.empty()) {
+			cout << "Id: " << fileLine << endl;
+			getline(fileAnimalRegister, fileLine);
+
+			cout << "Name: " << fileLine << endl;
+			getline(fileAnimalRegister, fileLine);
+
+			cout << "Age: " << fileLine << endl;
+			getline(fileAnimalRegister, fileLine);
+
+			cout << "Type: " << fileLine << endl;
+			getline(fileAnimalRegister, fileLine);
+
+			cout << "Breed: " << fileLine << endl << endl;
+		}
 	}
 
 	fileAnimalRegister.close();
 }
 
 void ShelterController::addAnimal(Shelter& shelter) {
-	ofstream fileRegister;
-	fileRegister.open(Shelter::FILE_ANIMAL_REGISTER_NAME, ios::app);
+	ofstream animalFileRegister;
+	animalFileRegister.open(Shelter::FILE_ANIMAL_REGISTER_NAME, ios::app);
 
-	if (fileRegister.is_open()) {
+	if (animalFileRegister.is_open()) {
 		Animal createdAnimal = setupAnimalData();
-		saveAnimalToFile(createdAnimal, fileRegister);
-		shelter.incrementCurrentCapacity();
 
-		fileRegister.close();
+		saveAnimalToFile(createdAnimal, animalFileRegister);
+		shelter.incrementCurrentCapacity();
+		Printer::println("Animal created", Printer::GREEN, true);
+
+		animalFileRegister.close();
 	} else {
+		const string errorMessage = "Couldn't open " + Shelter::FILE_ANIMAL_REGISTER_NAME + " file";
+		Printer::println(errorMessage, Printer::RED);
+	}
+}
+
+void ShelterController::deleteAnimal(Shelter& shelter) {
+	fstream animalFileRegister;
+	animalFileRegister.open(Shelter::FILE_ANIMAL_REGISTER_NAME, ios::in);
+
+	if (animalFileRegister.is_open()) {
+		unsigned long int animalId = -1;
+		
+		Printer::println("Delete animal", Printer::BLUE);
+		cout << "Animal id for delete: ";
+		cin >> animalId;
+
+		const bool isAnimalDeleted = deleteAnimalFromFile(animalId, animalFileRegister);
+
+		if (isAnimalDeleted) {
+			shelter.decrementCurrentCapacity();
+		}
+	}
+	else {
 		const string errorMessage = "Couldn't open " + Shelter::FILE_ANIMAL_REGISTER_NAME + " file";
 		Printer::println(errorMessage, Printer::RED);
 	}
@@ -82,8 +128,6 @@ Animal ShelterController::setupAnimalData() {
 	cin >> animalBreed;
 
 	cout << endl;
-	Printer::println("Animal created", Printer::GREEN);
-	cout << endl;
 
 	animal.setId(IdSequence::getNextId());
 	animal.setName(animalName);
@@ -94,12 +138,60 @@ Animal ShelterController::setupAnimalData() {
 	return animal;
 };
 
-void ShelterController::saveAnimalToFile(Animal animal, ofstream& fileRegister) {
-	fileRegister << animal.getId() << endl;
-	fileRegister << animal.getName() << endl;
-	fileRegister << animal.getAge() << endl;
-	fileRegister << animal.getType() << endl;
-	fileRegister << animal.getBreed() << endl << endl;
+void ShelterController::saveAnimalToFile(Animal animal, ofstream& animalFileRegister) {
+	animalFileRegister << animal.getId() << endl;
+	animalFileRegister << animal.getName() << endl;
+	animalFileRegister << animal.getAge() << endl;
+	animalFileRegister << animal.getType() << endl;
+	animalFileRegister << animal.getBreed() << endl << endl;
+}
+
+bool ShelterController::deleteAnimalFromFile(unsigned long int animalId, fstream& animalFileRegister) {
+	ofstream templateAnimalFileRegister(Shelter::FILE_TEMP_ANIMAL_REGISTER_NAME);
+
+	char* animalFileRegisterNameAsChar = new char[Shelter::FILE_ANIMAL_REGISTER_NAME.length() + 1];
+	char* templateAnimalFileRegisterNameAsChar = new char[Shelter::FILE_TEMP_ANIMAL_REGISTER_NAME.length() + 1];
+	strcpy_s(animalFileRegisterNameAsChar, Shelter::FILE_ANIMAL_REGISTER_NAME.length() + 1, Shelter::FILE_ANIMAL_REGISTER_NAME.c_str());
+	strcpy_s(templateAnimalFileRegisterNameAsChar, Shelter::FILE_TEMP_ANIMAL_REGISTER_NAME.length() + 1, Shelter::FILE_TEMP_ANIMAL_REGISTER_NAME.c_str());
+
+	const unsigned int idLineNumberMultiplier = 7;
+	const unsigned int shiftToNextId = 6;
+	unsigned int currentLineNumber = 1;
+	bool isAnimalDeleted = false;
+	string fileLine = "";
+
+	while (getline(animalFileRegister, fileLine)) {
+		bool isAnimalIdLine = currentLineNumber % shiftToNextId == 1;
+		bool isAnimalIdForDelete = fileLine.compare(to_string(animalId)) == 0;
+
+		if (isAnimalIdLine && isAnimalIdForDelete) {
+			for (int i = 0; i < shiftToNextId - 1; i++) {
+				getline(animalFileRegister, fileLine);
+			}
+
+			isAnimalDeleted = true;
+		} else if (fileLine.empty()) {
+			templateAnimalFileRegister << endl;
+		} else {
+			templateAnimalFileRegister << fileLine << endl;
+		}
+
+		currentLineNumber++;
+	}
+
+	if (isAnimalDeleted) {
+		Printer::println("Animal deleted\n", Printer::GREEN);
+	} else {
+		Printer::println("Animal not found\n", Printer::RED);
+	}
+
+	animalFileRegister.close();
+	templateAnimalFileRegister.close();
+
+	remove(animalFileRegisterNameAsChar);
+	rename(templateAnimalFileRegisterNameAsChar, animalFileRegisterNameAsChar);
+
+	return isAnimalDeleted;
 }
 
 void ShelterController::printMainPage(Shelter& shelter) {
