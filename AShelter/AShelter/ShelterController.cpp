@@ -115,6 +115,7 @@ void ShelterController::addAnimal(Shelter& shelter) {
 		Printer::println("Animal created", Printer::GREEN, true);
 
 		animalFileRegister.close();
+		createdAnimal.~Animal();
 	} else {
 		const string errorMessage = "Couldn't open " + Shelter::FILE_ANIMAL_REGISTER_NAME + " file";
 		Printer::println(errorMessage, Printer::RED);
@@ -134,6 +135,7 @@ void ShelterController::updateAnimal(Shelter& shelter) {
 
 		Animal updatedAnimal = setupAnimalData(animalId);
 		this->updateAnimalInFile(updatedAnimal, animalFileRegister);
+		updatedAnimal.~Animal();
 	}
 	else {
 		const string errorMessage = "Couldn't open " + Shelter::FILE_ANIMAL_REGISTER_NAME + " file";
@@ -262,6 +264,7 @@ void ShelterController::updateAnimalInFile(Animal updatedAnimal, fstream& animal
 
 			this->saveAnimalToFileWithOptionalData(updatedAnimal, previousAnimal, templateAnimalFileRegister);
 			isAnimalUpdated = true;
+			previousAnimal.~Animal();
 		} else if (fileLine.empty()) {
 			templateAnimalFileRegister << endl;
 		} else {

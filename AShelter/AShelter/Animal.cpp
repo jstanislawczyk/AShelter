@@ -8,6 +8,10 @@ Animal::Animal() {
 	this->breed = "";
 }
 
+Animal::~Animal() {
+
+}
+
 unsigned long int Animal::getId() const {
 	return this->id;
 }

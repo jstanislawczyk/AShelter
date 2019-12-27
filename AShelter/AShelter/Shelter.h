@@ -18,6 +18,7 @@ class Shelter {
 		static const string FILE_TEMP_ANIMAL_REGISTER_NAME;
 
 		Shelter();
+		~Shelter();
 
 		void incrementCurrentCapacity();
 		void decrementCurrentCapacity(); 

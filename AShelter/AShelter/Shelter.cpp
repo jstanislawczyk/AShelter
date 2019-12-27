@@ -7,6 +7,10 @@ Shelter::Shelter() {
 	this->setupInitialCapacity();
 }
 
+Shelter::~Shelter() {
+	
+}
+
 void Shelter::setupInitialCapacity() {
 	ifstream fileAnimalRegister;
 	int animalsQuantity = 0;

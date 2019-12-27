@@ -13,6 +13,7 @@ class Animal {
 
 	public:
 		Animal();
+		~Animal();
 
 		unsigned long int getId() const;
 		string getName() const;
