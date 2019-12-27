@@ -12,6 +12,8 @@ class Animal {
 		string breed;
 
 	public:
+		Animal();
+
 		unsigned long int getId() const;
 		string getName() const;
 		int getAge() const;

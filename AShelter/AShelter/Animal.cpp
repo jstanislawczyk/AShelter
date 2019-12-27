@@ -1,5 +1,13 @@
 #include "Animal.h"
 
+Animal::Animal() {
+	this->id = 0;
+	this->name = "";
+	this->age = 0;
+	this->type = "";
+	this->breed = "";
+}
+
 unsigned long int Animal::getId() const {
 	return this->id;
 }

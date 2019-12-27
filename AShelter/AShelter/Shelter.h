@@ -20,7 +20,9 @@ class Shelter {
 		Shelter();
 
 		void incrementCurrentCapacity();
-		void decrementCurrentCapacity();
+		void decrementCurrentCapacity(); 
+		bool isFullShelter();
+		int getQuantityOfFreePlaces();
 
 		string getName();
 		int getMaximumCapacity();

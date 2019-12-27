@@ -31,6 +31,14 @@ void Shelter::decrementCurrentCapacity() {
 	this->setCurrentCapacity(this->getCurrentCapacity() - 1);
 }
 
+bool Shelter::isFullShelter() {
+	return this->getCurrentCapacity() == this->getMaximumCapacity();
+}
+
+int Shelter::getQuantityOfFreePlaces() {
+	return this->getMaximumCapacity() - this->getCurrentCapacity();
+}
+
 string Shelter::getName() {
 	return name;
 }

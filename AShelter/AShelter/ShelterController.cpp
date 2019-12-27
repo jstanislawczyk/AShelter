@@ -1,10 +1,14 @@
 #include "ShelterController.h"
 #include "IdSequence.h"
 
+ShelterController::~ShelterController() {
+	Printer::println("Application closed", Printer::GREEN);
+}
+
 void ShelterController::init() {
 	Shelter shelter = Shelter();
 
-	printMainPage(shelter);
+	this->printMainPage(shelter);
 }
 
 void ShelterController::chooseOption(Shelter& shelter) {
@@ -16,25 +20,37 @@ void ShelterController::chooseOption(Shelter& shelter) {
 
 	switch (userChoice) {
 	case 1:
-		showAnimals(shelter);
-		printMainPage(shelter);
+		this->showAnimals(shelter);
+		this->printMainPage(shelter);
 		break;
 	case 2:
-		addAnimal(shelter);
-		printMainPage(shelter);
+		this->addAnimal(shelter);
+		this->printMainPage(shelter);
 		break;
 	case 3:
-		updateAnimal(shelter);
-		printMainPage(shelter);
+		this->updateAnimal(shelter);
+		this->printMainPage(shelter);
 		break;
 	case 4:
-		deleteAnimal(shelter);
-		printMainPage(shelter);
+		this->deleteAnimal(shelter);
+		this->printMainPage(shelter);
 		break;
 	default:
-		Printer::println("Application closed", Printer::GREEN);
+		shelter.~Shelter();
 		break;
 	}
+}
+
+void ShelterController::printMainPage(Shelter& shelter) {
+	Printer::println(shelter.getName(), Printer::BLUE);
+	cout << endl;
+	cout << "1. Show animals" << endl;
+	cout << "2. Add animal" << endl;
+	cout << "3. Edit animal" << endl;
+	cout << "4. Delete animal" << endl;
+	cout << "5. Exit" << endl;
+
+	this->chooseOption(shelter);
 }
 
 void ShelterController::showAnimals(Shelter& shelter) {
@@ -42,9 +58,7 @@ void ShelterController::showAnimals(Shelter& shelter) {
 	string fileLine = "";
 
 	fileAnimalRegister.open(Shelter::FILE_ANIMAL_REGISTER_NAME);
-
-	Printer::println("Current animals quantity", Printer::BLUE, true);
-	cout << shelter.getCurrentCapacity() << "/" << shelter.getMaximumCapacity() << endl << endl;
+	this->showCurrentShelterCapacity(shelter);
 	Printer::println("Animals list", Printer::BLUE);
 
 	while (getline(fileAnimalRegister, fileLine)) {
@@ -68,14 +82,35 @@ void ShelterController::showAnimals(Shelter& shelter) {
 	fileAnimalRegister.close();
 }
 
+void ShelterController::showCurrentShelterCapacity(Shelter& shelter) {
+	Printer::Color color = Printer::GREEN;
+	const bool isShelterAlmostFull = shelter.getQuantityOfFreePlaces() <= 5;
+	 
+	if (shelter.isFullShelter()) {
+		color = Printer::RED;
+	} else if (isShelterAlmostFull) {
+		color = Printer::ORANGE;
+	}
+
+	Printer::println("Current animals quantity", Printer::BLUE, true);
+	Printer::println(to_string(shelter.getCurrentCapacity()) + "/" + to_string(shelter.getMaximumCapacity()), color);
+	cout << endl;
+}
+
 void ShelterController::addAnimal(Shelter& shelter) {
 	ofstream animalFileRegister;
+
+	if (shelter.isFullShelter()) {
+		Printer::println("Shelter is full", Printer::RED, true);
+		return;
+	}
+
 	animalFileRegister.open(Shelter::FILE_ANIMAL_REGISTER_NAME, ios::app);
 
 	if (animalFileRegister.is_open()) {
 		Animal createdAnimal = setupAnimalData();
 
-		saveAnimalToFile(createdAnimal, animalFileRegister);
+		this->saveAnimalToFile(createdAnimal, animalFileRegister);
 		shelter.incrementCurrentCapacity();
 		Printer::println("Animal created", Printer::GREEN, true);
 
@@ -98,7 +133,7 @@ void ShelterController::updateAnimal(Shelter& shelter) {
 		cin >> animalId;
 
 		Animal updatedAnimal = setupAnimalData(animalId);
-		updateAnimalInFile(updatedAnimal, animalFileRegister);
+		this->updateAnimalInFile(updatedAnimal, animalFileRegister);
 	}
 	else {
 		const string errorMessage = "Couldn't open " + Shelter::FILE_ANIMAL_REGISTER_NAME + " file";
@@ -225,7 +260,7 @@ void ShelterController::updateAnimalInFile(Animal updatedAnimal, fstream& animal
 			getline(animalFileRegister, fileLine);
 			previousAnimal.setBreed(fileLine);
 
-			saveAnimalToFileWithOptionalData(updatedAnimal, previousAnimal, templateAnimalFileRegister);
+			this->saveAnimalToFileWithOptionalData(updatedAnimal, previousAnimal, templateAnimalFileRegister);
 			isAnimalUpdated = true;
 		} else if (fileLine.empty()) {
 			templateAnimalFileRegister << endl;
@@ -324,16 +359,4 @@ bool ShelterController::deleteAnimalFromFile(unsigned long int animalId, fstream
 	rename(templateAnimalFileRegisterNameAsChar, animalFileRegisterNameAsChar);
 
 	return isAnimalDeleted;
-}
-
-void ShelterController::printMainPage(Shelter& shelter) {
-	Printer::println(shelter.getName(), Printer::BLUE);
-	cout << endl;
-	cout << "1. Show animals" << endl;
-	cout << "2. Add animal" << endl;
-	cout << "3. Edit animal" << endl;
-	cout << "4. Delete animal" << endl;
-	cout << "5. Exit" << endl;
-
-	chooseOption(shelter);
 }
