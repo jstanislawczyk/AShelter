@@ -2,13 +2,14 @@
 #include <iostream>
 #include <fstream>
 
+#include "AbstractController.h"
 #include "Printer.h"
 #include "Shelter.h"
 #include "Animal.h"
 
 using namespace std;
 
-class ShelterController {
+class ShelterController : public AbstractController {
 	private:
 		void chooseOption(Shelter& shelter);
 		void showAnimals(Shelter& shelter);

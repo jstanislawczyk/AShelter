@@ -57,6 +57,9 @@
     <ClCompile Include="IdSequence.cpp">
       <Filter>Source Files\model</Filter>
     </ClCompile>
+    <ClCompile Include="AbstractController.cpp">
+      <Filter>Source Files\controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -76,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="IdSequence.h">
       <Filter>Header Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractController.h">
+      <Filter>Header Files\controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

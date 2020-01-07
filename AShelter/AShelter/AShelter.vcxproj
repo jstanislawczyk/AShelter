@@ -152,6 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AbstractController.cpp" />
     <ClCompile Include="Animal.cpp" />
     <ClCompile Include="AShelter.cpp" />
     <ClCompile Include="IdSequence.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="ShelterController.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractController.h" />
     <ClInclude Include="Animal.h" />
     <ClInclude Include="IdSequence.h" />
     <ClInclude Include="Printer.h" />
