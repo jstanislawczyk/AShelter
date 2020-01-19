@@ -153,7 +153,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AbstractController.cpp" />
+    <ClCompile Include="AbstractSnapshot.cpp" />
     <ClCompile Include="Animal.cpp" />
+    <ClCompile Include="AnimalsSnapshot.cpp" />
     <ClCompile Include="AShelter.cpp" />
     <ClCompile Include="IdSequence.cpp" />
     <ClCompile Include="Printer.cpp" />
@@ -162,7 +164,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractController.h" />
+    <ClInclude Include="AbstractSnapshot.h" />
     <ClInclude Include="Animal.h" />
+    <ClInclude Include="AnimalsSnapshot.h" />
     <ClInclude Include="IdSequence.h" />
     <ClInclude Include="Printer.h" />
     <ClInclude Include="resource.h" />

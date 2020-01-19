@@ -1,5 +1,4 @@
 #include "ShelterController.h"
-#include "IdSequence.h"
 
 ShelterController::~ShelterController() {
 	Printer::println("Application closed", Printer::GREEN);
@@ -35,6 +34,10 @@ void ShelterController::chooseOption(Shelter& shelter) {
 		this->deleteAnimal(shelter);
 		this->printMainPage(shelter);
 		break;
+	case 5:
+		this->createAnimalsListSnapshot(shelter);
+		this->printMainPage(shelter);
+		break;
 	default:
 		shelter.~Shelter();
 		break;
@@ -48,7 +51,8 @@ void ShelterController::printMainPage(Shelter& shelter) {
 	cout << "2. Add animal" << endl;
 	cout << "3. Edit animal" << endl;
 	cout << "4. Delete animal" << endl;
-	cout << "5. Exit" << endl;
+	cout << "5. Create animals list snapshot" << endl;
+	cout << "6. Exit" << endl;
 
 	this->chooseOption(shelter);
 }
@@ -164,6 +168,11 @@ void ShelterController::deleteAnimal(Shelter& shelter) {
 		const string errorMessage = "Couldn't open " + Shelter::FILE_ANIMAL_REGISTER_NAME + " file";
 		Printer::println(errorMessage, Printer::RED);
 	}
+}
+
+void ShelterController::createAnimalsListSnapshot(Shelter& shelter) {
+	AnimalsSnapshot animalsSnapshot = AnimalsSnapshot();
+	animalsSnapshot.createSnapshot(shelter);
 }
 
 Animal ShelterController::setupAnimalData() {

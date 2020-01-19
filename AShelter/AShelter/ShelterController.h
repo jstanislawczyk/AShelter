@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -6,6 +8,8 @@
 #include "Printer.h"
 #include "Shelter.h"
 #include "Animal.h"
+#include "AnimalsSnapshot.h"
+#include "IdSequence.h"
 
 using namespace std;
 
@@ -16,6 +20,7 @@ class ShelterController : public AbstractController {
 		void addAnimal(Shelter& shelter);
 		void updateAnimal(Shelter& shelter);
 		void deleteAnimal(Shelter& shelter);
+		void createAnimalsListSnapshot(Shelter& shelter);
 		Animal setupAnimalData();
 		Animal setupAnimalData(unsigned long int animalId);
 		void showCurrentShelterCapacity(Shelter& shelter);

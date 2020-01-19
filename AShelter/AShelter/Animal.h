@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 
 using namespace std;
@@ -14,6 +16,8 @@ class Animal {
 	public:
 		Animal();
 		~Animal();
+
+		bool operator ==(const Animal& animalToCompare);
 
 		unsigned long int getId() const;
 		string getName() const;

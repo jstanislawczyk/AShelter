@@ -12,6 +12,16 @@ Animal::~Animal() {
 
 }
 
+bool Animal::operator ==(const Animal& animalToCompare) {
+	const bool equalIds = animalToCompare.getId() == this->getId();
+	const bool equalNames = animalToCompare.getName() == this->getName();
+	const bool equalAges = animalToCompare.getAge() == this->getAge();
+	const bool equalTypes = animalToCompare.getType() == this->getType();
+	const bool equalBreeds = animalToCompare.getBreed() == this->getBreed();
+
+	return equalIds && equalNames && equalAges && equalTypes && equalBreeds;
+}
+
 unsigned long int Animal::getId() const {
 	return this->id;
 }
