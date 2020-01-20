@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "AbstractSnapshot.h"
+#include "Animal.h"
 #include "Shelter.h"
 #include "Printer.h"
 
