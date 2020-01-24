@@ -5,7 +5,7 @@ void AnimalsSnapshot::createSnapshot(Shelter& shelter) {
 	ofstream fileAnimalRegisterSnapshot;
 	string fileLine = "";
 	Animal templateAnimal = Animal();
-	Animal* animalsList = new Animal[shelter.getCurrentCapacity()];
+	this->setAnimalsForSnapshotFile(new Animal[shelter.getCurrentCapacity()]);
 	int iterator = 0;
 
 	fileAnimalRegister.open(Shelter::FILE_ANIMAL_REGISTER_NAME);
@@ -30,18 +30,18 @@ void AnimalsSnapshot::createSnapshot(Shelter& shelter) {
 			templateAnimal.setBreed(fileLine);
 			getline(fileAnimalRegister, fileLine);
 
-			animalsList[iterator] = templateAnimal;
+			this->animalsForSnapshotFile[iterator] = templateAnimal;
 
 			iterator++;
 		}
 	}
 
 	for (int i = 0; i < shelter.getCurrentCapacity(); i++) {
-		fileAnimalRegisterSnapshot << (animalsList + i)->getId() << endl;
-		fileAnimalRegisterSnapshot << (animalsList + i)->getName() << endl;
-		fileAnimalRegisterSnapshot << (animalsList + i)->getAge() << endl;
-		fileAnimalRegisterSnapshot << (animalsList + i)->getType() << endl;
-		fileAnimalRegisterSnapshot << (animalsList + i)->getBreed() << endl << endl;
+		fileAnimalRegisterSnapshot << (this->animalsForSnapshotFile + i)->getId() << endl;
+		fileAnimalRegisterSnapshot << (this->animalsForSnapshotFile + i)->getName() << endl;
+		fileAnimalRegisterSnapshot << (this->animalsForSnapshotFile + i)->getAge() << endl;
+		fileAnimalRegisterSnapshot << (this->animalsForSnapshotFile + i)->getType() << endl;
+		fileAnimalRegisterSnapshot << (this->animalsForSnapshotFile + i)->getBreed() << endl << endl;
 	}
 
 	Printer::println("Snapshot created", Printer::GREEN, true);
@@ -59,15 +59,27 @@ string AnimalsSnapshot::getSnapshotFileName() {
 	return this->snapshotFileName;
 }
 
+Animal* AnimalsSnapshot::getAnimalsForSnapshotFile() {
+	return this->animalsForSnapshotFile;
+}
+
 void AnimalsSnapshot::setSnapshotFileName(string newSnapshotFileName) {
 	this->snapshotFileName = newSnapshotFileName;
 }
 
+
+void AnimalsSnapshot::setAnimalsForSnapshotFile(Animal* animalsForSnapshotFile) {
+	this->animalsForSnapshotFile = animalsForSnapshotFile;
+}
+
 AnimalsSnapshot::AnimalsSnapshot() {
 	string fileName = "";
+	Animal* animalsList = new Animal[0];
 
 	cout << "Enter snapshot file name: ";
 	cin >> fileName;
+
+	this->setAnimalsForSnapshotFile(animalsList);
 
 	const bool isEqualToAnimalFileName = (fileName.compare(Shelter::FILE_ANIMAL_REGISTER_NAME)) == 0;
 

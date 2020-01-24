@@ -36,6 +36,7 @@ void ShelterController::chooseOption(Shelter& shelter) {
 			break;
 		case 5:
 			this->createAnimalsListSnapshot(shelter);
+			this->printMainPage(shelter);
 			break;
 		case 6:
 			shelter.~Shelter();
