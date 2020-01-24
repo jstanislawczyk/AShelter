@@ -18,30 +18,32 @@ void ShelterController::chooseOption(Shelter& shelter) {
 	cout << endl;
 
 	switch (userChoice) {
-	case 1:
-		this->showAnimals(shelter);
-		this->printMainPage(shelter);
-		break;
-	case 2:
-		this->addAnimal(shelter);
-		this->printMainPage(shelter);
-		break;
-	case 3:
-		this->updateAnimal(shelter);
-		this->printMainPage(shelter);
-		break;
-	case 4:
-		this->deleteAnimal(shelter);
-		this->printMainPage(shelter);
-		break;
-	case 5:
-		this->createAnimalsListSnapshot(shelter);
-		this->printMainPage(shelter);
-		break;
-	default:
-		shelter.~Shelter();
-		break;
-	}
+		case 1:
+			this->showAnimals(shelter);
+			this->printMainPage(shelter);
+			break;
+		case 2:
+			this->addAnimal(shelter);
+			this->printMainPage(shelter);
+			break;
+		case 3:
+			this->updateAnimal(shelter);
+			this->printMainPage(shelter);
+			break;
+		case 4:
+			this->deleteAnimal(shelter);
+			this->printMainPage(shelter);
+			break;
+		case 5:
+			this->createAnimalsListSnapshot(shelter);
+			break;
+		case 6:
+			shelter.~Shelter();
+			break;
+		default:
+			Printer::println("Given option is not available", Printer::RED, true);
+			this->printMainPage(shelter);
+		}
 }
 
 void ShelterController::printMainPage(Shelter& shelter) {
